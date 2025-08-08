@@ -8,11 +8,6 @@ export const metadata = {
 }
 
 const MyBlog = async() => {
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('intentioanl delay')
-    },2000)
-  })
   return (
     <div>MyBlog</div>
   )
