@@ -4,6 +4,7 @@ const DocsHomePage = async ({params}:{
     params: Promise<{slug:string[]}>
 }) => {
     const {slug} = await params;
+    console.log(slug)
     if(slug?.length === 2){
         return (
             <h1>
