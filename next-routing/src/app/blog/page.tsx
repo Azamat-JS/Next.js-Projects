@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { resolve } from "path"
 
 export const metadata = {
   title: {
@@ -6,7 +7,12 @@ export const metadata = {
     }
 }
 
-const MyBlog = () => {
+const MyBlog = async() => {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('intentioanl delay')
+    },2000)
+  })
   return (
     <div>MyBlog</div>
   )
