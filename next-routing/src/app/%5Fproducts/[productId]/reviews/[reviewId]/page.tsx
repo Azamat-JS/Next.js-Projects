@@ -5,7 +5,7 @@ const ProductReview = async ({
 }: {
   params: { productId: string; reviewId: string };
 }) => {
-  const { productId, reviewId } = params;
+  const { productId, reviewId } = await params;
   if(parseInt(reviewId) > 1000){
     notFound();
   }
