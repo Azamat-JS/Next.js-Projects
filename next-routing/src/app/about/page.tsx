@@ -1,4 +1,6 @@
-
+export const metadata = {
+  title: "About ProCodeJS"
+}
 
 const About = () => {
   return (
