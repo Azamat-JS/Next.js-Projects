@@ -24,19 +24,18 @@ async function getUserAlbums(userId: string) {
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
   );
-  console.log(res)
   return res.json();
 }
 
 export default async function UserProfile({
   params,
 }: {
-  params: Promise<{ userId: string }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { userId } = await params;
+  const { id } = await params;
 
-  const postsData = getUserPosts(userId);
-  const albumsData = getUserAlbums(userId);
+  const postsData = getUserPosts(id);
+  const albumsData = getUserAlbums(id);
 
   const [posts, albums] = await Promise.all([postsData, albumsData]);
   return (
