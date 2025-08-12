@@ -23,4 +23,25 @@ export async function setRole(formData:FormData) {
     } catch (error) {
         throw new Error('Failed to set role')
     }
+};
+
+
+export async function removeRole(formData: FormData) {
+  const { sessionClaims } = await auth();
+
+  if (sessionClaims?.metadata?.role !== "admin") {
+    throw new Error("Not Authorized");
+  }
+
+  const client = await clerkClient();
+  const id = formData.get("id") as string;
+
+  try {
+    await client.users.updateUser(id, {
+      publicMetadata: { role: null },
+    });
+    revalidatePath("/admin");
+  } catch {
+    throw new Error("Failed to remove role");
+  }
 }
