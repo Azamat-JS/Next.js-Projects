@@ -2,6 +2,7 @@
 
 import { removeProduct } from "@/actions/products";
 import { getProducts } from "@/prisma-db";
+import Form from "next/form";
 import Link from "next/link";
 import { useOptimistic } from "react";
 
@@ -36,14 +37,14 @@ export const ProductDetail = ({products}: {products: Product[]}) => {
                 <p>{product.description}</p>
                 <p className="text-lg font-medium">${product.price}</p>
 
-                <form action={removeProductById.bind(null, product.id)}>
+                <Form action={removeProductById.bind(null, product.id)}>
                 <button
                   type="submit"
                   className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600"
                   >
                   Delete
                 </button>
-                  </form>
+                  </Form>
             </li>
         ))}
     </ul>
