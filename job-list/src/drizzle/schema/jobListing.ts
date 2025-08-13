@@ -1,5 +1,5 @@
-import { boolean, integer, pgEnum, pgTable, text, varchar } from "drizzle-orm/pg-core";
-import { id } from "../schemaHelpers";
+import { boolean, index, integer, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { createdAt, id, updatedAt } from "../schemaHelpers";
 import { OrganizationTable } from "./organisations";
 
 export const wageIntervals = ["hourly", "yearly"] as const;
@@ -39,4 +39,8 @@ export const JobListingTable = pgTable("job_listings", {
     experienceLevel: experienceLevelEnum().notNull(),
     status: jobListingStatusEnum().notNull().default('draft'),
     type: jobListingTypeEnum().notNull(),
-})
+    postedAt: timestamp({withTimezone: true}),
+    createdAt,
+    updatedAt
+},
+table => [index().on(table.stateAbbreviation)])
