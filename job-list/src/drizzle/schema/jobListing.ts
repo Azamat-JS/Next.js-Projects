@@ -1,0 +1,42 @@
+import { boolean, integer, pgEnum, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { id } from "../schemaHelpers";
+import { OrganizationTable } from "./organisations";
+
+export const wageIntervals = ["hourly", "yearly"] as const;
+type wageInterval = typeof wageIntervals[number]
+export const wageIntervalEnum = pgEnum('job_listings_wage_interval', wageIntervals);
+
+
+export const locationRequirements = ["in-office", "hybrid", "remote"] as const;
+type LocationRequirement = typeof locationRequirements[number]
+export const locationRequirementEnum = pgEnum('job_listings_location_requirement', locationRequirements)
+
+
+export const experienveLevels = ["junior", "mid-level", "senior"] as const;
+type ExperienveLevel = typeof experienveLevels[number]
+export const experienceLevelEnum = pgEnum('job_listings_experience_level', experienveLevels);
+
+export const jobListingStatuses = ["draft", "published", "delisted"] as const;
+type JobListingStatus = typeof jobListingStatuses[number]
+export const jobListingStatusEnum = pgEnum('job_listings_status', jobListingStatuses);
+
+
+export const jobListingTypes = ["internship", "part-time", "full-time"] as const;
+type JobListingType = typeof jobListingTypes[number]
+export const jobListingTypeEnum = pgEnum('job_listings_type', jobListingTypes);
+
+export const JobListingTable = pgTable("job_listings", {
+    id,
+    organizationId: varchar().references(() => OrganizationTable.id, {onDelete: 'cascade'}).notNull(),
+    title: varchar().notNull(),
+    description: text().notNull(),
+    wage: integer(),
+    wageInterval: wageIntervalEnum(),
+    stateAbbreviation: varchar(),
+    city: varchar(),
+    isFeatured: boolean().notNull().default(false),
+    locationRequirement: locationRequirementEnum().notNull(),
+    experienceLevel: experienceLevelEnum().notNull(),
+    status: jobListingStatusEnum().notNull().default('draft'),
+    type: jobListingTypeEnum().notNull(),
+})
