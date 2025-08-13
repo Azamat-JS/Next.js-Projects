@@ -1,6 +1,8 @@
 import { boolean, index, integer, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { createdAt, id, updatedAt } from "../schemaHelpers";
 import { OrganizationTable } from "./organisations";
+import { relations } from "drizzle-orm";
+import { JobListingApplicationTable } from "./jobListingApplication";
 
 export const wageIntervals = ["hourly", "yearly"] as const;
 type wageInterval = typeof wageIntervals[number]
@@ -43,4 +45,12 @@ export const JobListingTable = pgTable("job_listings", {
     createdAt,
     updatedAt
 },
-table => [index().on(table.stateAbbreviation)])
+table => [index().on(table.stateAbbreviation)]);
+
+export const jobListingReferences = relations(JobListingTable, ({one, many}) => ({
+    organization: one(OrganizationTable, {
+        fields: [JobListingTable.organizationId],
+        references: [OrganizationTable.id]
+    }),
+    applications: many(JobListingApplicationTable)
+}))
