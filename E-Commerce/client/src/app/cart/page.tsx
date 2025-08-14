@@ -125,10 +125,10 @@ const CartPage = () => {
             </div>
           </div>
           
-          <button className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white cursor-pointer rounded-lg p-2 flex items-center justify-center gap-2">
+{activeStep === 1 && <button onClick={() => router.push('/cart?step=2', {scroll:false})} className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white cursor-pointer rounded-lg p-2 flex items-center justify-center gap-2">
             Continue
             <ArrowRight className="w-3 h-3"/>
-          </button>
+          </button>}
         </div>
       </div>
     </div>
