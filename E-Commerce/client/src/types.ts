@@ -9,3 +9,11 @@ export type ProductsType = {
     colors: string[];
     images: Record<string, string>
 }
+
+export type CartItemType = ProductsType & {
+    quantity:number;
+    selectedSize:string;
+    selectedColor: string;
+}
+
+export type CartItemsType = CartItemType[]
