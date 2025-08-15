@@ -23,7 +23,7 @@ const steps = [
   },
 ]
 
-const cartItems:CartItemsType = [
+const cartItems: CartItemsType = [
   {
     id: 1,
     name: "Adidas CoreFit T-Shirt",
@@ -93,13 +93,13 @@ const CartPage = () => {
 
       {/* Steps */}
       <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-          {steps.map((s) => (
-            <div key={s.id} className={`flex items-center gap-2 border-b-2 pb-4 ${s.id === activeStep ? "border-gray-800" : "border-gray-400"}`}>
-              <div className={`w-6 h-6 rounded-full text-white p-4 flex items-center justify-center ${s.id === activeStep ? "bg-gray-800" : "bg-gray-400"}`}>{s.id}</div>
+        {steps.map((s) => (
+          <div key={s.id} className={`flex items-center gap-2 border-b-2 pb-4 ${s.id === activeStep ? "border-gray-800" : "border-gray-400"}`}>
+            <div className={`w-6 h-6 rounded-full text-white p-4 flex items-center justify-center ${s.id === activeStep ? "bg-gray-800" : "bg-gray-400"}`}>{s.id}</div>
 
-              <p className={`text-sm font-medium ${s.id === activeStep ? "text-gray-800" : "text-gray-400"}`}>{s.title}</p>
-            </div>
-          ))}
+            <p className={`text-sm font-medium ${s.id === activeStep ? "text-gray-800" : "text-gray-400"}`}>{s.title}</p>
+          </div>
+        ))}
       </div>
 
       {/* STEPS & DETAILS */}
@@ -109,31 +109,31 @@ const CartPage = () => {
           {activeStep === 1 ? (cartItems.map((item) => (
             // signle cart item
             <div key={item.id}
-            className="flex items-center justify-between"
+              className="flex items-center justify-between"
             >
               {/* Image and details */}
               <div className="flex gap-8">
                 {/* Image */}
                 <div className="relative w-33 h-33 rounded-lg overflow-hidden">
-                  <Image src={item.images[item.selectedColor]} alt={item.name} fill className="object-contain"/>
+                  <Image src={item.images[item.selectedColor]} alt={item.name} fill className="object-contain" />
                 </div>
                 {/* item details */}
-                  <div className="flex flex-col justify-between">
-                    <div className="flex flex-col gap-1">
-                      <p className="text-[17px] font-medium">{item.name}</p>
-                      <p className="text-sm text-gray-500">Quantity: {' '} {item.quantity}</p>
-                      <p className="text-sm text-gray-500">Size: {' '}{item.selectedSize}</p>
-                      <p className="text-sm text-gray-500">Color: {' '}{item.selectedColor}</p>
-                      <p className="font-medium">${item.price.toFixed(2)}</p>
-                    </div>
+                <div className="flex flex-col justify-between">
+                  <div className="flex flex-col gap-1">
+                    <p className="text-[17px] font-medium">{item.name}</p>
+                    <p className="text-sm text-gray-500">Quantity: {' '} {item.quantity}</p>
+                    <p className="text-sm text-gray-500">Size: {' '}{item.selectedSize}</p>
+                    <p className="text-sm text-gray-500">Color: {' '}{item.selectedColor}</p>
+                    <p className="font-medium">${item.price.toFixed(2)}</p>
                   </div>
+                </div>
               </div>
               {/* Delete button */}
               <button className="w-8 h-8 rounded-full hover:bg-red-200 transition-all duration-300 bg-red-100 text-red-400 flex items-center justify-center cursor-pointer">
-                <Trash2 className="w-4 h-4"/>
+                <Trash2 className="w-4 h-4" />
               </button>
             </div>
-          ))) : activeStep === 2 ? (<ShippingForm /> ): activeStep === 3 && shippingForm ? (<PaymentForm />) : (<p className="text-sm text-gray-500">Please fill in the shipping form to continue.</p>) }
+          ))) : activeStep === 2 ? (<ShippingForm setShippingForm={setShippingForm} />) : activeStep === 3 && shippingForm ? (<PaymentForm />) : (<p className="text-sm text-gray-500">Please fill in the shipping form to continue.</p>)}
         </div>
 
         {/* details */}
@@ -152,16 +152,16 @@ const CartPage = () => {
               <p className="text-gray-500">Shipping Fee</p>
               <p className="font-medium">$10</p>
             </div>
-            <hr className="border-gray-200"/>
-             <div className="flex justify-between">
+            <hr className="border-gray-200" />
+            <div className="flex justify-between">
               <p className="text-gray-800 font-semibold">Total Number</p>
               <p className="font-medium">${cartItems.reduce((acc, cur) => acc + cur.price * cur.quantity, 0).toFixed(2)}</p>
             </div>
           </div>
-          
-{activeStep === 1 && <button onClick={() => router.push('/cart?step=2', {scroll:false})} className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white cursor-pointer rounded-lg p-2 flex items-center justify-center gap-2">
+
+          {activeStep === 1 && <button onClick={() => router.push('/cart?step=2', { scroll: false })} className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white cursor-pointer rounded-lg p-2 flex items-center justify-center gap-2">
             Continue
-            <ArrowRight className="w-4 h-4"/>
+            <ArrowRight className="w-4 h-4" />
           </button>}
         </div>
       </div>
