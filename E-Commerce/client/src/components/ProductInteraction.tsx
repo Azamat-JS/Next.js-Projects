@@ -1,9 +1,11 @@
 "use client"
 
+import useCartStore from "@/stores/cartStore";
 import { ProductsType } from "@/types"
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { usePathname, useSearchParams,useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 
 const ProductInteraction = ({ product, selectedSize, selectedColor }: { product: ProductsType, selectedSize: string, selectedColor: string }) => {
@@ -11,7 +13,9 @@ const ProductInteraction = ({ product, selectedSize, selectedColor }: { product:
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1);
+
+    const {addToCart} = useCartStore();
 
     const handleTypeChange = (type:string, value:string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -27,6 +31,16 @@ const ProductInteraction = ({ product, selectedSize, selectedColor }: { product:
                 setQuantity((prev) => prev - 1)
             }
         }
+    };
+
+    const handleAddToCart = () => {
+        addToCart({
+            ...product,
+            quantity,
+            selectedColor,
+            selectedSize
+        });
+        toast.success('Product added to cart')
     }
     return (
         <div className="flex flex-col gap-4 mt-4">
@@ -71,6 +85,15 @@ const ProductInteraction = ({ product, selectedSize, selectedColor }: { product:
                     </button>
                 </div>
             </div>
+            {/* buttons */}
+            <button onClick={handleAddToCart} className="bg-gray-800 text-white px-4 py-2 rounded-md shadow-lg flex items-center justify-center gap-2 cursor-pointer text-sm font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                <Plus className="w-4 h-4"/>
+                Add to Cart
+            </button>
+            <button className="ring-1 ring-gray-400 shadow-lg text-gray-800 px-4 py-2 rounded-md flex items-center gap-2 text-sm font-medium cursor-pointer justify-center hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                <ShoppingCart className="w-4 h-4"/>
+                Buy this product
+            </button>
         </div>
     )
 }
