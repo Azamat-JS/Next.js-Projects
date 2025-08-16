@@ -1,7 +1,7 @@
 "use client"
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import { LogOut, Moon, Settings, Sun, UserIcon } from 'lucide-react'
+import { LogOut, Menu, Moon, Settings, Sun, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import {
     DropdownMenu,
@@ -13,14 +13,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from './ui/button'
 import { useTheme } from 'next-themes'
-import { SidebarTrigger } from './ui/sidebar'
+import { SidebarTrigger, useSidebar } from './ui/sidebar'
 
 const Navbar = () => {
     const {theme, setTheme} = useTheme()
+    const {toggleSidebar} = useSidebar()
     return (
         <nav className='p-4 flex items-center justify-between'>
             {/* left */}
-                <SidebarTrigger/>
+                {/* <SidebarTrigger/> */}
+                <Menu onClick={toggleSidebar}/>
             {/* right */}
             <div className='flex items-center gap-4'>
                 <Link href='/'>Dashboard</Link>
